@@ -1,0 +1,9 @@
+import {Form} from "react-router-dom"
+
+export default function Login(){
+    return <Form action="/login" method="post">
+        <input type="text" name="username" placeholder="username"/>
+        <input type="text" name="password" placeholder="password"/>
+        <button>Log In</button>
+    </Form>
+}
