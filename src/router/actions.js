@@ -45,6 +45,8 @@ export const loginAction = async({request}) => {
         return redirect("/login")
     }
 
+    localStorage.setItem("loggedIn", "true")
+
     return redirect("/dashboard")
 }
 
@@ -59,7 +61,7 @@ export const logoutAction = async() => {
         alert("failed logout")
         return redirect("/dashboard")
     }
-
+    localStorage.removeItem("loggedIn")
     return redirect("/")
 }
 
@@ -80,6 +82,46 @@ export const createAction = async ({request}) => {
 
     if (response.status === 400){
         alert("failed create")
+        return redirect("/dasboard")
+    }
+
+    return redirect("/dashboard")
+}
+
+export const updateAction = async ({request, params}) => {
+    const id = params.id
+    const formData = await request.formData()
+
+    const note = {
+        title: formData.get("title"),
+        message: formData.get("message")
+    }
+
+    const response = await fetch(url + `/note/${id}`, {
+        method: "put",
+        headers,
+        credentials: "include",
+        body: JSON.stringify(note)
+    })
+
+    if (response.status === 400){
+        alert("failed update")
+        return redirect("/dasboard")
+    }
+
+    return redirect("/dashboard")
+}
+
+export const deleteAction = async ({params}) => {
+    const id = params.id
+   
+    const response = await fetch(url + `/note/${id}`, {
+        method: "delete",
+        credentials: "include",
+    })
+
+    if (response.status === 400){
+        alert("failed delete")
         return redirect("/dasboard")
     }
 
