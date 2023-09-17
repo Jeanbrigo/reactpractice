@@ -6,7 +6,11 @@ import {
 import App from "../App";
 import Login from "../pages/login";
 import Signup from "../pages/signup";
-import { loginAction, signupAction, logoutAction } from "./actions";
+import { loginAction, signupAction, logoutAction, createAction } from "./actions";
+import Dashboard from "../pages/dashboard";
+import { indexLoader } from "./loaders";
+import Index from "../pages";
+import Create from "../pages/create";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -15,9 +19,9 @@ const router = createBrowserRouter(
         <Route path="/login" element={<Login/>} action={loginAction}/>
         <Route path="/signup" element={<Signup/>} action={signupAction}/>
         <Route path="/logout" action={logoutAction}/>
-        <Route path="/dashboard/" element={<h1>Dasboard</h1>}>
-          <Route path="" element={<h1>index</h1>} />
-          <Route path="create" element={<h1>create</h1>} />
+        <Route path="/dashboard/" element={<Dashboard/>}>
+          <Route path="" element={<Index/>} loader={indexLoader} />
+          <Route path="create" element={<Create/>} action={createAction} />
           <Route path=":id/" element={<h1>show</h1>}>
             <Route path="update" element={<h1>index</h1>} />
             <Route path="delete" element={<h1>index</h1>} />
